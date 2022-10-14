@@ -12,4 +12,14 @@ QuestionModel(
 'Tokyo, Japan' = false, 
 }), 
 
+QuestionModel(
+  'How many Whiskers does the average cat have on each sie of its face? ', 
+  {
+    '1': false, 
+    '3': false, 
+    '12': true, 
+    '5, 007': false, 
+  }, 
+)
+
 ]; 
