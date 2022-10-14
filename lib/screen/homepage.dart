@@ -120,13 +120,17 @@ class _HomePageState extends State<HomePage> {
                                             context,
                                             MaterialPageRoute(
                                                 builder: (context) =>
-                                                    ResultScreen(score)));
+                                                    const ResultScreen(
+                                                        score: $score)));
                                       }
                                     : () {
                                         _controller.nextPage(
                                             duration: const Duration(
                                                 milliseconds: 500),
                                             curve: Curves.linear);
+                                        setState(() {
+                                          isPressed = false;
+                                        });
                                       }
                                 : null,
                             child: Text(
