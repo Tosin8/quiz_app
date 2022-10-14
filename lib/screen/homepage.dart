@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:quiz_app/data/questions_list.dart';
 
 import '../constant/color.dart';
+import 'result_screen.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -11,7 +12,14 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  // creating page controller
+  // creating page controller for the pageview
+
+  final PageController _controller = PageController(initialPage: 0);
+
+  // setting up the game variable
+
+  bool isPressed = false;
+  int score = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -20,6 +28,18 @@ class _HomePageState extends State<HomePage> {
         body: Padding(
             padding: const EdgeInsets.all(18.0),
             child: PageView.builder(
+
+                // disabling the scrolling inorder to navigate only with the button
+
+                physics: const NeverScrollableScrollPhysics(),
+                controller: _controller,
+                onPageChanged: (page) {
+                  setState(
+                    () {
+                      isPressed = false;
+                    },
+                  );
+                },
                 itemCount: questions.length,
                 itemBuilder: (context, index) {
                   return Column(
@@ -58,9 +78,31 @@ class _HomePageState extends State<HomePage> {
                             margin: const EdgeInsets.only(bottom: 18),
                             child: MaterialButton(
                               shape: const StadiumBorder(),
-                              color: secondColor,
+                              color: isPressed
+                                  ? questions[index]
+                                          .answer!
+                                          .entries
+                                          .toList()[i]
+                                          .value
+                                      ? isTrue
+                                      : isWrong
+                                  : secondColor,
                               padding: const EdgeInsets.symmetric(vertical: 18),
-                              onPressed: () {},
+                              onPressed: isPressed
+                                  ? () {}
+                                  : () {
+                                      setState(() {
+                                        isPressed = true;
+                                      });
+                                      if (questions[index]
+                                          .answer!
+                                          .entries
+                                          .toList()[i]
+                                          .value) {
+                                        score += 10;
+                                        print(score);
+                                      }
+                                    },
                               child: Text(
                                 questions[index].answer!.keys.toList()[i],
                                 style: const TextStyle(color: Colors.white),
@@ -69,12 +111,32 @@ class _HomePageState extends State<HomePage> {
                       const SizedBox(
                         height: 30.0,
                       ),
-                      OutlinedButton(
-                          onPressed: () {},
-                          child: const Text('Next Question',
-                              style: TextStyle(
-                                color: Colors.white,
-                              ))),
+                      Row(mainAxisAlignment: MainAxisAlignment.end, children: [
+                        OutlinedButton(
+                            onPressed: isPressed
+                                ? index + 1 == questions.length
+                                    ? () {
+                                        Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    const ResultScreen()));
+                                      }
+                                    : () {
+                                        _controller.nextPage(
+                                            duration: const Duration(
+                                                milliseconds: 500),
+                                            curve: Curves.linear);
+                                      }
+                                : null,
+                            child: Text(
+                                index + 1 == questions.length
+                                    ? 'See Result'
+                                    : 'Next Question',
+                                style: const TextStyle(
+                                  color: Colors.white,
+                                ))),
+                      ]),
                     ],
                   );
                 })));
