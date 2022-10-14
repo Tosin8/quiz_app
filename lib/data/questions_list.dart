@@ -4,10 +4,10 @@ List<QuestionModel> questions = [
   QuestionModel(
     'Where did Orville and Wilbur Wright build their first flying machine?',
     {
-      'Paris France': false,
-      'Boson Massachusettes': false,
-      'Kitty Hawk North Carolina': true,
-      'Tokyo Japan': false,
+      'Paris , France': false,
+      'Boson , Massachusettes': false,
+      'Kitty Hawk , North Carolina': true,
+      'Tokyo , Japan': false,
     },
   ),
   QuestionModel(
