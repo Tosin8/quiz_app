@@ -120,7 +120,7 @@ class _HomePageState extends State<HomePage> {
                                             context,
                                             MaterialPageRoute(
                                                 builder: (context) =>
-                                                    const ResultScreen()));
+                                                    ResultScreen(score)));
                                       }
                                     : () {
                                         _controller.nextPage(
