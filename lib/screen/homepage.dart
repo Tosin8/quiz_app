@@ -120,8 +120,8 @@ class _HomePageState extends State<HomePage> {
                                             context,
                                             MaterialPageRoute(
                                                 builder: (context) =>
-                                                    const ResultScreen(
-                                                        score: $score)));
+                                                    ResultScreen(
+                                                        score: score)));
                                       }
                                     : () {
                                         _controller.nextPage(
@@ -133,6 +133,10 @@ class _HomePageState extends State<HomePage> {
                                         });
                                       }
                                 : null,
+                            style: OutlinedButton.styleFrom(
+                                shape: const StadiumBorder(),
+                                side:
+                                    BorderSide(color: secondColor, width: 1.0)),
                             child: Text(
                                 index + 1 == questions.length
                                     ? 'See Result'
